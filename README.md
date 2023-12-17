@@ -1,2 +1,0 @@
- 
-# Amol's Portfolio
