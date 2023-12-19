@@ -31,6 +31,32 @@ window.addEventListener('DOMContentLoaded', event => {
         loop: true
     });
 
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    console.log(toggleButtons);
+    const projects = document.querySelectorAll('.project');
+
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const projectType = button.getAttribute('data-type');
+            toggleButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            projects.forEach(project => {
+                project.classList.remove('active');
+                if (projectType === 'all' || project.classList.contains(projectType)) {
+                    project.classList.add('active');
+                }
+            });
+        });
+    });
+
+    const cardTitles = document.querySelectorAll('.card-title');
+    cardTitles.forEach(title => {
+        title.addEventListener('click', () => {
+            title.parentElement.parentElement.classList.toggle('open');
+        });
+    });
+
 });
 
 // // Setup and start animation! 

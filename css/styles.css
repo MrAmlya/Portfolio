@@ -10960,3 +10960,38 @@ section.resume-section .resume-section-content {
     padding-bottom: 5rem;
   }
 }
+
+.project {
+  display: none;
+  transition: transform 0.3s;
+}
+
+.project.active {
+  display: block;
+}
+
+.card {
+  margin-bottom: 20px;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-img-top {
+  height: 200px; /* Adjust the height as needed */
+  object-fit: cover;
+}
+
+.card-title {
+  cursor: pointer;
+}
+
+.card-description {
+  display: none;
+}
+
+.card.open .card-description {
+  display: block;
+}
