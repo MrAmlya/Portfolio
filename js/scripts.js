@@ -70,24 +70,40 @@ window.addEventListener('DOMContentLoaded', event => {
 // });
 
 
+function encodeFormData(data) {
+    return Object.keys(data)
+        .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+        .join("&");
+}
+
 function submitForm() {
-    let formDataArray = [];
     const form = document.getElementById("contactForm");
+    const statusEl = document.getElementById("formStatus");
     const formData = new FormData(form);
-    
-    let lenOfArray = formDataArray.length;
-    // Convert formData to JSON
+
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
     const jsonData = {};
     for (const [key, value] of formData.entries()) {
         jsonData[key] = value;
     }
 
-    // Add the current form data to the array
-    formDataArray.push(jsonData);
+    statusEl.textContent = "Sending...";
 
-    // Clear the form after submission
-    form.reset();
-
-    // Log the array of form data
-    console.log("Form Data Array:", formDataArray);
+    fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeFormData(jsonData),
+    })
+        .then(() => {
+            statusEl.textContent = "Thanks! Your message has been sent.";
+            form.reset();
+        })
+        .catch((error) => {
+            statusEl.textContent = "Something went wrong. Please try again or email me directly.";
+            console.error("Form submission error:", error);
+        });
 }
